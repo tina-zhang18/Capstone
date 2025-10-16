@@ -2,16 +2,31 @@ def process_text(string):
     string = string.lower()
     return string
 
-def char_to_braile(char):
-    
-    return braille_alphabet.get(char)
+def char_to_braille(char):
+    if char.isdigit(): # check if character is a number, if so return the # symbol and the number itself
+        if char == "0":
+            braille_char = braille_alphabet.get("j")
+        else:
+            braille_char = braille_alphabet.get(chr(ord(char)+48))
+    else:
+        braille_char = braille_alphabet.get(char)
+    return braille_char
 
 def text_to_braille(string):
     string = process_text(string)
     binary_braille = []
-    for i in string:
-        binary_braille.append(char_to_braile(i))
+    for char in string:
+        if char.isdigit():
+            binary_braille.append(char_to_braille("#"))
+        binary_braille.append(char_to_braille(char))
     return binary_braille
+
+def print_unicode(list):
+    unicode = ""
+    for char in list:
+        unicode += chr(char+10240)
+    print(unicode)
+    return
 
 global braille_alphabet
 braille_alphabet = {
@@ -41,36 +56,18 @@ braille_alphabet = {
     "x": 0b101101,
     "y": 0b111101,
     "z": 0b111001,  
-    " ": 0b000000  
+    " ": 0b000000,
+    "#": 0b111100,
+    ".": 0b011010,
+    ",": 0b000010,
+    "!": 0b010110,
+    "?": 0b100110,
+    ":": 0b010010,
+    ";": 0b000110,
+    "'": 0b000100,
 }
 
-# braille_alphabet = {
-#     "a": b"000001",
-#     "b": b"000011",
-#     "c": b"001001",
-#     "d": b"011001",
-#     "e": b"010001",
-#     "f": b"001011",
-#     "g": b"011011",
-#     "h": b"010011",
-#     "i": b"001010",
-#     "j": b"011010",
-#     "k": b"000101",
-#     "l": b"000111",
-#     "m": b"001101",
-#     "n": b"011101",
-#     "o": b"010101",
-#     "p": b"001111",
-#     "q": b"011111",
-#     "r": b"010111",
-#     "s": b"001110",
-#     "t": b"011110",
-#     "u": b"100101",
-#     "v": b"100111",
-#     "w": b"111010",
-#     "x": b"101101",
-#     "y": b"111101",
-#     "z": b"111001",    
-# }
+text = text_to_braille("where are you? it's almost 6!")
+print(text)
+print_unicode(text)
 
-print(text_to_braille("cat and dog"))
