@@ -21,12 +21,20 @@ def text_to_braille(string):
         binary_braille.append(char_to_braille(char))
     return binary_braille
 
-def print_unicode(list):
+def print_unicode_str(list):
     unicode = ""
     for char in list:
         unicode += chr(char+10240)
     print(unicode)
     return
+
+def print_unicode_list(list):
+    unicode = []
+    for char in list:
+        unicode.append(chr(char+10240))
+    print(unicode)
+    return
+
 
 global braille_alphabet
 braille_alphabet = {
@@ -69,5 +77,6 @@ braille_alphabet = {
 
 text = text_to_braille("where are you? it's almost 6!")
 print(text)
-print_unicode(text)
+print_unicode_str(text)
+print_unicode_list(text)
 
