@@ -1,6 +1,6 @@
-def process_text(string):
-    string = string.lower()
-    return string
+# def process_text(string):
+#     string = string.lower()
+#     return string
 
 def char_to_braille(char):
     if char.isdigit(): # check if character is a number, if so return the # symbol and the number itself
@@ -13,11 +13,14 @@ def char_to_braille(char):
     return braille_char
 
 def text_to_braille(string):
-    string = process_text(string)
+    # string = process_text(string)
     binary_braille = []
     for char in string:
         if char.isdigit():
             binary_braille.append(char_to_braille("#"))
+        if char.isupper():
+            binary_braille.append(char_to_braille("cap"))
+            char = char.lower()
         binary_braille.append(char_to_braille(char))
     return binary_braille
 
@@ -38,6 +41,7 @@ def print_unicode_list(list):
 
 global braille_alphabet
 braille_alphabet = {
+    "cap": 0b100000,
     "a": 0b000001,
     "b": 0b000011,
     "c": 0b001001,
@@ -76,6 +80,10 @@ braille_alphabet = {
 }
 
 text = text_to_braille("where are you? it's almost 6!")
+print(text)
+print_unicode_str(text)
+print_unicode_list(text)
+text = text_to_braille("Where are you? It's almost 6!")
 print(text)
 print_unicode_str(text)
 print_unicode_list(text)
