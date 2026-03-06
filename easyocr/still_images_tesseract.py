@@ -6,7 +6,7 @@ import re
 # If Tesseract is not in PATH (Windows only)
 # pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-path = 'Google Drive/My Drive/Capstone 2025/Testing/'
+path = 'test_images/'
 
 #------------------------------------------------------------------------------------------------------------
 def read_text(image_path):
@@ -76,8 +76,8 @@ def read_text(image_path):
 #------------------------------------------------------------------------------------------------------------
 
 # DEFINE IMAGE
-pathset = path + 'Set 2/'
-image = pathset + '2a.png'
+# pathset = path + ''
+image = path+'2a.png'
 
 # RUN
 results, annotated_image, words = read_text(image)

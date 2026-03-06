@@ -5,7 +5,7 @@ import numpy as np
 #LOAD
 reader = easyocr.Reader(['en'])
 path='./test_images/'
-imagename='7b.jpeg'
+imagename='tbm.jpg'
 image=cv2.imread(path+imagename)
 results = reader.readtext(path+imagename)
 
