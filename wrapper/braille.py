@@ -19,6 +19,11 @@ def list_to_braille(list):
         binary_braille.append(char_to_braille_cell(char))
     return binary_braille
 
+def print_unicode(char):
+    unicode = chr(char+10240)
+    print(unicode)
+    return
+
 global braille_alphabet
 braille_alphabet = {
     "cap": 0b100000,
