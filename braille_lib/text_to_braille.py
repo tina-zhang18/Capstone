@@ -79,10 +79,11 @@ braille_alphabet = {
     "'": 0b000100,
 }
 
-text = text_to_braille("where are you? it's almost 6!")
-print(text)
-print_unicode_str(text)
-print_unicode_list(text)
+# text = text_to_braille("where are you? it's almost 6!")
+# print(text)
+# print_unicode_str(text)
+# print_unicode_list(text)
+print("Where are you? It's almost 6!")
 text = text_to_braille("Where are you? It's almost 6!")
 print(text)
 print_unicode_str(text)
