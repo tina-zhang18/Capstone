@@ -1,8 +1,4 @@
-# def process_text(string):
-#     string = string.lower()
-#     return string
-
-def char_to_braille(char):
+def char_to_braille_cell(char):
     if char.isdigit(): # check if character is a number, if so return the # symbol and the number itself
         if char == "0":
             braille_char = braille_alphabet.get("j")
@@ -12,32 +8,16 @@ def char_to_braille(char):
         braille_char = braille_alphabet.get(char, 0b111111)
     return braille_char
 
-def text_to_braille(string):
-    # string = process_text(string)
+def list_to_braille(list):
     binary_braille = []
-    for char in string:
+    for char in list:
         if char.isdigit():
-            binary_braille.append(char_to_braille("#"))
+            binary_braille.append(char_to_braille_cell("#"))
         if char.isupper():
-            binary_braille.append(char_to_braille("cap"))
+            binary_braille.append(char_to_braille_cell("cap"))
             char = char.lower()
-        binary_braille.append(char_to_braille(char))
+        binary_braille.append(char_to_braille_cell(char))
     return binary_braille
-
-def print_unicode_str(list):
-    unicode = ""
-    for char in list:
-        unicode += chr(char+10240)
-    print(unicode)
-    return
-
-def print_unicode_list(list):
-    unicode = []
-    for char in list:
-        unicode.append(chr(char+10240))
-    print(unicode)
-    return
-
 
 global braille_alphabet
 braille_alphabet = {
@@ -80,13 +60,6 @@ braille_alphabet = {
     "*": 0b010100
 }
 
-# text = text_to_braille("where are you? it's almost 6!")
-# print(text)
-# print_unicode_str(text)
-# print_unicode_list(text)
-print("Where are you? It's almost 6!")
-text = text_to_braille("Where are you? It's almost 6! **")
-print(text)
-print_unicode_str(text)
-print_unicode_list(text)
+
+
 
