@@ -3,17 +3,29 @@ import serial
 import braille
 import tesseract
 import cv2
-
+from picamera2 import Picamera2
 
 ser = serial.Serial("/dev/serial0", 115200, timeout=1)
 
+# Initialize camera ONCE outside the loop (faster, avoids re-init overhead)
+picam2 = Picamera2()
+config = picam2.create_still_configuration(main={"size": (1280, 720)})
+picam2.configure(config)
+picam2.start()
+time.sleep(2)  # Let AE/AWB settle on first start
+
+def capture():
+    frame = picam2.capture_array()  # numpy array, same as cv2 frame
+    if frame is None:
+        raise RuntimeError("Failed to capture frame")
+    return frame
 
 def translate(image):
     text = tesseract.read_text(image)
     braille_buffer = braille.list_to_braille(text)
     return braille_buffer
 
-def capture():
+"""def capture():
     cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
@@ -31,7 +43,7 @@ def capture():
     cap.release()
 
     return frame
-
+"""
 def send_uart(msg):
     ser.write((msg + "\n").encode())
 
