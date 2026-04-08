@@ -5,7 +5,13 @@ import tesseract
 import cv2
 from picamera2 import Picamera2
 
-ser = serial.Serial("/dev/serial0", 115200, timeout=1)
+ser = serial.Serial(
+    '/dev/serial0',
+    9600,
+    bytesize=8,
+    parity='N',
+    stopbits=1,
+    timeout=1)
 
 # Initialize camera ONCE outside the loop (faster, avoids re-init overhead)
 picam2 = Picamera2()
@@ -44,8 +50,13 @@ def translate(image):
 
     return frame
 """
-def send_uart(msg):
-    ser.write((msg + "\n").encode())
+def send_uart(val):
+    START = 0xAA
+    END = 0x55
+
+    val &= 0xFF  
+
+    ser.write(bytes([START, val, END]))
 
 def main(): 
    
