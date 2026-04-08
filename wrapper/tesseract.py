@@ -34,25 +34,31 @@ def read_text(image):
         confidences.append(conf_norm)
 
         # Split words & punctuation
-        words = re.findall(r'\w+|[^\w\s]', text)
+        words = re.findall(r'[a-zA-Z]+', text)
+        added_valid_word = False
 
         for word in words:
-            # --- NEW LOGIC: Spell checking ---
-            # If the string contains only letters, check it against the dictionary
-            if word.isalpha():
-                # spell.known() takes a list of words and returns the ones that are valid
-                valid_words = spell.known([word.lower()])
-                
-                if not valid_words:
-                    print(f"Discarded non-word: '{word}' (conf: {conf_norm:.2f})")
-                    continue # Skip this word completely
+            # --- CHANGED: Force the word to lowercase immediately ---
+            word = word.lower()
             
-            # If we made it here, it's either a valid word, a number, or punctuation
+            # Spell check the lowercase word
+            valid_words = spell.known([word])
+            
+            if not valid_words:
+                print(f"Discarded non-word: '{word}' (conf: {conf_norm:.2f})")
+                continue # Skip this word completely
+            
             print(f"{word} (conf: {conf_norm:.2f})")
             
-            # Break the word into individual characters and add to our buffer
+            # Break the lowercase word into individual characters
             characters = list(word)
             char_buffer.extend(characters)
+            added_valid_word = True
+            
+        # Only add a space after the block if we actually kept a word
+        # (Prevents double spaces when standalone punctuation is dropped)
+        if added_valid_word:
+            char_buffer.append(' ')
 
     if char_buffer and char_buffer[-1] == ' ':
         char_buffer.pop() # Remove trailing space at the end of a "sentence".
