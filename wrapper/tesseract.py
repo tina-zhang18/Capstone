@@ -23,7 +23,7 @@ def read_text(image):
         text = data["text"][i].strip()
         conf = float(data["conf"][i])
 
-        if conf < 0 or text == "":
+        if conf < 40 or text == "":
             continue
 
         conf_norm = conf / 100.0
