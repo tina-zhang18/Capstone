@@ -38,25 +38,6 @@ def translate(image):
     text = tesseract.read_text(image)
     return text
 
-"""def capture():
-    cap = cv2.VideoCapture(0)
-
-    if not cap.isOpened():
-        raise RuntimeError("Cannot open Pi Camera")
-
-    # Set resolution (optional)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-
-    # Capture a single frame
-    ret, frame = cap.read()
-    if not ret:
-        raise RuntimeError("Failed to capture frame")
-
-    cap.release()
-
-    return frame
-"""
 def send_uart(val):
     START = 0xAA
     END = 0x55
@@ -70,11 +51,6 @@ def main():
 
     while True:
         try:
-            # Trigger mechanism
-            user_input = input("Press ENTER to capture image (or type 'q' to quit): ")
-            if user_input.lower() == 'q':
-                break
-
             print("Capturing image...")
             frame = capture()
             
@@ -90,8 +66,8 @@ def main():
                 # If you leave them blank, it defaults to the values in the class.
                 uart.send_char(
                     char, 
-                    hiz_duty=30, 
-                    hiz_freq=150, 
+                    hiz_duty=200, 
+                    hiz_freq=60, 
                     pol_duty=50, 
                     pol_freq=100
                 )
@@ -99,7 +75,7 @@ def main():
                 # Print to console so you can see what is happening
                 print(f"Sent: '{char}'")
                 
-                # Small delay to allow the physical pins to actuate and user to feel them
+                # Small delay to allow user to feel
                 time.sleep(0.5) 
 
             print("Transmission complete.\n")
